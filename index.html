@@ -993,7 +993,7 @@
             <a class="button wa full" id="send-wa" href="https://wa.me/6281523984574" target="_blank" rel="noopener noreferrer">Langsung Cek Nomor <svg aria-hidden="true"><use href="#arrow"/></svg></a>
           </div>
           <p class="bottom-note">Pesan terisi otomatis. Tinggal tekan Kirim di WhatsApp.<br>Admin · 0815-2398-4574</p>
-          <p class="urgent-note">Kalau mendesak dan ingin nomornya segera dicek, boleh telepon admin lewat WhatsApp ya.</p>
+          <p class="urgent-note" id="urgent-note" hidden>Kalau mendesak dan ingin nomornya segera dicek, boleh telepon admin lewat WhatsApp ya.</p>
           <div class="back-row">
             <button class="text-button" id="back-support" type="button">← Kembali ke QRIS</button>
             <button class="text-button" id="back-entry" type="button">Ubah nomor</button>
@@ -1079,6 +1079,7 @@
         $('message').value = message;
         $('send-wa').href = 'https://wa.me/' + ADMIN_WHATSAPP + '?text=' + encodeURIComponent(message);
         $('support-thanks').hidden = !supported;
+        $('urgent-note').hidden = !supported;
         showStep(3);
       }
       function openOrder(){lastFocus=document.activeElement;order.showModal();document.body.classList.add('modal-open');fields.querySelector('input').focus();}
@@ -1101,6 +1102,7 @@
         if(firstInvalid){firstInvalid.focus();return;}
         checkedNumbers = numbers;
         $('support-thanks').hidden = true;
+        $('urgent-note').hidden = true;
         showStep(2);
       });
       function toast(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,2800);}
@@ -1112,6 +1114,5 @@
       function tick(){const now=new Date();$('clock').textContent=new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now).replace(/\./g,':')+' WIB';$('year').textContent=new Intl.DateTimeFormat('en',{timeZone:'Asia/Jakarta',year:'numeric'}).format(now);}
       tick();setInterval(tick,1000);addPhone(false);openOrder();
     </script>
-  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"325a7821a5f54e25a776020c55a929c0","r":1,"spa":2}' crossorigin="anonymous"></script>
-</body>
+  </body>
 </html>
