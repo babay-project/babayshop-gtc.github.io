@@ -2,6 +2,14 @@
 <html lang="id">
   <head>
     <meta charset="utf-8">
+    <!-- PENGATURAN ADMIN: ubah status menjadi 'buka' atau 'tutup', lalu simpan/upload ulang HTML. -->
+    <script id="site-settings">
+      const SITE_SETTINGS = Object.freeze({
+        status: 'tutup',
+        minimumDonate: 1000,
+        closedMessage: 'Server GTC sudah limit. Pengecekan nomor sementara ditutup. Silakan coba lagi nanti.'
+      });
+    </script>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#0667c9">
     <meta name="description" content="Pesan jasa cek nomor via Getcontact di BabayShop.id. Maksimal 3 nomor sekali pesan, fee seikhlasnya, lanjut melalui WhatsApp.">
@@ -813,6 +821,17 @@
       @media (max-width: 400px) {
         .method-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
       }
+
+      .donate-amount-field { margin: 20px 0; }
+      .donate-amount-field label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 650; }
+      .amount-input-wrap { display: flex; align-items: center; border: 1px solid #c4d9ef; border-radius: 11px; background: #f5f9ff; overflow: hidden; }
+      .amount-input-wrap > span { padding-left: 14px; color: var(--muted); font-size: 14px; }
+      .amount-input-wrap input { min-width: 0; width: 100%; border: 0; background: transparent; color: var(--text); padding: 13px 14px; font-size: 16px; }
+      .amount-input-wrap:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .amount-input-wrap input:focus-visible { outline: none; }
+      .amount-hint { color: var(--muted); font-size: 11px; margin-top: 8px; }
+      .service-banner { display: grid; gap: 5px; margin-top: 24px; padding: 18px 20px; border: 1px solid #b9d6f5; border-radius: 14px; background: #e8f3ff; color: #285b90; font-size: 13px; }
+      .closed-symbol { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 22px; border-radius: 50%; background: #e5f1ff; color: #0667c9; font-size: 30px; font-weight: 750; }
     </style>
   </head>
   <body>
@@ -830,6 +849,10 @@
         <a class="nav-link" href="https://wa.me/6281523984574" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#chat"/></svg>Chat admin ↗</a>
       </header>
       <main>
+        <div class="service-banner" id="service-banner" role="status" hidden>
+          <strong>Pengecekan sementara ditutup</strong>
+          <span id="service-banner-message"></span>
+        </div>
         <section class="hero">
           <div>
             <p class="eyebrow"><span class="dot"></span>Jasa cek nomor · Getcontact</p>
@@ -927,7 +950,7 @@
           </details>
           <details>
             <summary>Harus bayar berapa?</summary>
-            <p>Fee seikhlasnya untuk membantu jasa ini, tanpa nominal minimum yang ditentukan. Pembayaran dicek manual oleh admin melalui bukti transfer.</p>
+            <p>Fee seikhlasnya untuk membantu jasa ini, minimal Rp1.000 jika ingin donate. Kamu tetap bisa memilih Lewati tanpa donate. Pembayaran dicek manual oleh admin melalui bukti transfer.</p>
           </details>
           <details>
             <summary>Kalau nomornya tidak punya tag?</summary>
@@ -949,11 +972,17 @@
           </div>
           <button class="close" id="close-order" aria-label="Tutup popup">×</button>
         </div>
-        <div class="progress" aria-hidden="true">
+        <div class="progress" id="step-progress" aria-hidden="true">
           <i class="on"></i>
           <i id="progress-two"></i>
           <i id="progress-three"></i>
         </div>
+        <section id="closed-step" hidden>
+          <div class="closed-symbol" aria-hidden="true">!</div>
+          <h2 class="dialog-title" id="closed-title" tabindex="-1">Cek nomor belum tersedia.</h2>
+          <p class="intro" id="closed-message"></p>
+          <button type="button" class="button full" id="close-limit">Mengerti</button>
+        </section>
         <section id="entry-step">
           <div class="step-label">
             Langkah 01 / 03
@@ -975,12 +1004,12 @@
         <section id="donate-step" hidden>
           <div class="step-label">Langkah 02 / 03</div>
           <h2 class="dialog-title" id="donate-title" tabindex="-1">Donate seikhlasnya.</h2>
-          <p class="intro">Pilih metode donate yang paling nyaman. Nominal seikhlasnya, dan tahap ini boleh dilewati.</p>
+          <p class="intro">Pilih metode donate yang paling nyaman. Mulai Rp1.000 seikhlasnya, atau lewati tahap ini.</p>
           <div class="payment">
             <div class="pay-head">
               <strong>Donate Admin</strong>
             </div>
-            <p class="pay-desc">Pilih metode, lalu kirim nominal seikhlasnya. Terima kasih!</p>
+            <p class="pay-desc">Kirim nominal seikhlasnya, minimal Rp1.000. Terima kasih!</p>
             <fieldset class="method-picker">
               <legend>Metode donate</legend>
               <div class="method-grid">
@@ -1024,6 +1053,15 @@
               <button class="button secondary full" id="copy-wallet" type="button">Salin Nomor</button>
               <p class="wallet-hint">Buka aplikasi e-wallet pilihanmu, lalu transfer ke nomor di atas dengan nominal seikhlasnya.</p>
             </div>
+          </div>
+          <div class="donate-amount-field">
+            <label for="donate-amount">Nominal donate kamu</label>
+            <div class="amount-input-wrap">
+              <span aria-hidden="true">Rp</span>
+              <input id="donate-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="18" placeholder="Contoh: 1.000" aria-describedby="amount-hint amount-error">
+            </div>
+            <p class="amount-hint" id="amount-hint">Masukkan nominal yang sudah kamu transfer, minimal Rp1.000. Jika belum donate, pilih Lewati.</p>
+            <p class="error" id="amount-error" role="alert"></p>
           </div>
           <div class="donate-actions">
             <button class="button secondary" id="skip-donate" type="button">Lewati</button>
@@ -1081,6 +1119,7 @@
       const order = $('order-dialog'), qrDialog = $('qr-dialog'), fields = $('phone-fields');
       let fieldSequence = 0, lastFocus = null, toastTimer;
       let checkedNumbers = [];
+      let requestCode = '';
       document.querySelectorAll('.qris-image').forEach(img => {img.src = QRIS_IMAGE;});
       $('save-qr').href = QRIS_IMAGE;
       const DONATE_METHODS = {
@@ -1138,15 +1177,47 @@
         else if(!/^\+[1-9]\d{6,14}$/.test(clean))throw new Error('Periksa kode negara dan panjang nomor HP (7–15 digit).');
         return clean;
       }
-      function makeMessage(numbers, donated = false, method = 'QRIS') {
+      const formatMoney = value => 'Rp' + new Intl.NumberFormat('id-ID').format(value);
+      function parseDonationAmount(raw) {
+        const value = raw.trim().replace(/^Rp\s*/i, '');
+        if (!/^(?:\d+|[1-9]\d{0,2}(?:\.\d{3})+)$/.test(value)) {
+          throw new Error('Isi nominal dalam rupiah, misalnya 1000 atau 1.000.');
+        }
+        const amount = Number(value.replace(/\./g, ''));
+        if (!Number.isSafeInteger(amount) || amount < SITE_SETTINGS.minimumDonate) {
+          throw new Error('Minimal donate ' + formatMoney(SITE_SETTINGS.minimumDonate) + '.');
+        }
+        return amount;
+      }
+      function makeMessage(numbers, donated = false, code = requestCode, amount = 0) {
         const numberList = numbers.map(number => number.replace(/^\+/, '')).join('\n');
-        const methodLabel = Object.hasOwn(DONATE_METHODS, method) ? DONATE_METHODS[method].label : 'QRIS';
-        const donateNote = donated ? '\n\nSaya sudah donate melalui ' + methodLabel + ' ya, Kak.' : '';
-        return 'Halo BabayShop.id, saya ingin minta jasa cek nomor via Getcontact.\nNomor yang ingin dicek:\n\n'
-          + numberList + donateNote
+        const heading = 'Ref: GC' + (donated ? '7' : '3') + '-' + (donated ? amount : '0000') + '-' + code;
+        return heading + '\n\nHalo BabayShop.id, saya ingin minta jasa cek nomor via Getcontact.\nNomor yang ingin dicek:\n\n'
+          + numberList
           + '\n\nMohon bantu cek tag yang tersedia ya, Kak. Terima kasih!';
       }
+      function isServiceOpen() { return SITE_SETTINGS.status === 'buka'; }
+      function showClosed() {
+        if (qrDialog.open) qrDialog.close();
+        ['entry-step', 'donate-step', 'review-step'].forEach(id => { $(id).hidden = true; });
+        $('closed-step').hidden = false;
+        $('step-progress').hidden = true;
+        $('closed-message').textContent = SITE_SETTINGS.closedMessage;
+        $('service-banner-message').textContent = SITE_SETTINGS.closedMessage;
+        $('service-banner').hidden = false;
+        $('open-order').textContent = 'Pengecekan ditutup';
+        $('send-wa').removeAttribute('href');
+        $('send-wa').setAttribute('aria-disabled', 'true');
+        order.setAttribute('aria-labelledby', 'closed-title');
+        if (!order.open) order.showModal();
+        document.body.classList.add('modal-open');
+        $('closed-title').focus({ preventScroll: true });
+        order.scrollTop = 0;
+      }
       function showStep(step) {
+        if (!isServiceOpen()) { showClosed(); return; }
+        $('closed-step').hidden = true;
+        $('step-progress').hidden = false;
         const stepIds = ['entry-step', 'donate-step', 'review-step'];
         const titleIds = ['order-title', 'donate-title', 'review-title'];
         stepIds.forEach((id, index) => { $(id).hidden = index !== step - 1; });
@@ -1159,15 +1230,45 @@
       }
       function showEntry() { showStep(1); }
       function showReview(donated) {
-        const message = makeMessage(checkedNumbers, donated, selectedDonateMethod);
+        if (!isServiceOpen()) { showClosed(); return; }
+        $('amount-error').textContent = '';
+        $('donate-amount').removeAttribute('aria-invalid');
+        let amount = 0;
+        if (donated) {
+          try { amount = parseDonationAmount($('donate-amount').value); }
+          catch (error) {
+            $('amount-error').textContent = error.message;
+            $('donate-amount').setAttribute('aria-invalid', 'true');
+            $('donate-amount').focus();
+            return;
+          }
+        }
+        const message = makeMessage(checkedNumbers, donated, requestCode, amount);
+        $('donate-thanks').textContent = 'Terima kasih sudah donate ' + formatMoney(amount) + '! Lampirkan bukti transfer di chat admin ya.';
         $('message').value = message;
         $('send-wa').href = 'https://wa.me/' + ADMIN_WHATSAPP + '?text=' + encodeURIComponent(message);
+        $('send-wa').removeAttribute('aria-disabled');
         $('donate-thanks').hidden = !donated;
         $('urgent-note').hidden = !donated;
         showStep(3);
       }
-      function openOrder(){lastFocus=document.activeElement;order.showModal();document.body.classList.add('modal-open');fields.querySelector('input').focus();}
-      $('open-order').addEventListener('click',()=>{showEntry();openOrder();});
+      function openOrder() {
+        lastFocus = document.activeElement;
+        if (!isServiceOpen()) { showClosed(); return; }
+        if (!order.open) order.showModal();
+        document.body.classList.add('modal-open');
+        showEntry();
+      }
+      $('open-order').addEventListener('click', openOrder);
+      $('close-limit').addEventListener('click', () => order.close());
+      $('send-wa').addEventListener('click', event => {
+        if (!isServiceOpen()) { event.preventDefault(); showClosed(); }
+      });
+      $('donate-amount').addEventListener('input', () => {
+        $('amount-error').textContent = '';
+        $('donate-amount').removeAttribute('aria-invalid');
+      });
+      $('amount-hint').textContent = 'Masukkan nominal yang sudah kamu transfer, minimal ' + formatMoney(SITE_SETTINGS.minimumDonate) + '. Jika belum donate, pilih Lewati.';
       $('close-order').addEventListener('click',()=>order.close());
       order.addEventListener('close',()=>{document.body.classList.remove('modal-open');if(lastFocus&&lastFocus!==document.body)lastFocus.focus();else $('open-order').focus();});
       $('add-phone').addEventListener('click',()=>addPhone());
@@ -1177,7 +1278,9 @@
       $('skip-donate').addEventListener('click', () => showReview(false));
       $('done-donate').addEventListener('click', () => showReview(true));
       $('number-form').addEventListener('submit',event=>{
-        event.preventDefault();const numbers=[],seen=new Set();let firstInvalid=null;
+        event.preventDefault();
+        if (!isServiceOpen()) { showClosed(); return; }
+        const numbers=[],seen=new Set();let firstInvalid=null;
         [...fields.querySelectorAll('input')].forEach(input=>{
           const error=$(input.id+'-error');error.textContent='';input.removeAttribute('aria-invalid');
           try{const number=normalizePhone(input.value);if(seen.has(number))throw new Error('Nomor ini sudah diisi. Gunakan nomor lain atau hapus kolom ini.');seen.add(number);numbers.push(number);}
@@ -1185,6 +1288,7 @@
         });
         if(firstInvalid){firstInvalid.focus();return;}
         checkedNumbers = numbers;
+        requestCode = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
         selectDonateMethod('QRIS');
         $('donate-thanks').hidden = true;
         $('urgent-note').hidden = true;
