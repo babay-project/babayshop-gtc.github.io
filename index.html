@@ -6,13 +6,12 @@
     <script id="site-settings">
       const SITE_SETTINGS = Object.freeze({
         status: 'buka',
-        minimumDonate: 1000,
         closedMessage: 'Server GTC sudah limit. Pengecekan nomor sementara ditutup. Silakan coba lagi nanti.'
       });
     </script>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#0667c9">
-    <meta name="description" content="Pesan jasa cek nomor via Getcontact di BabayShop.id. Maksimal 3 nomor sekali pesan, fee seikhlasnya, lanjut melalui WhatsApp.">
+    <meta name="description" content="Pesan jasa cek nomor via Getcontact di BabayShop.id. Maksimal 3 nomor sekali pesan, mulai Rp1.000 per nomor, lanjut melalui WhatsApp.">
     <title>
       Cek Nomor Getcontact — BabayShop.id
     </title>
@@ -832,7 +831,7 @@
       .amount-hint { color: var(--muted); font-size: 11px; margin-top: 8px; }
       .service-banner { display: grid; gap: 5px; margin-top: 24px; padding: 18px 20px; border: 1px solid #b9d6f5; border-radius: 14px; background: #e8f3ff; color: #285b90; font-size: 13px; }
       .closed-symbol { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 22px; border-radius: 50%; background: #e5f1ff; color: #0667c9; font-size: 30px; font-weight: 750; }
-    </style>
+    select {width:100%;padding:10px;margin:5px 0 12px;border:1px solid #ccd8e4;border-radius:8px;background:white;color:#182739;font:inherit}</style>
   </head>
   <body>
     <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs><symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4M10 5h4"/></symbol><symbol id="chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8m-8 4h5"/></symbol></defs></svg>
@@ -857,9 +856,9 @@
           <div>
             <p class="eyebrow"><span class="dot"></span>Jasa cek nomor · Getcontact</p>
             <h1>Nomor siapa?<br><span>Yuk, cek dulu.</span></h1>
-            <p class="lead">Bantu temukan tag yang tersedia untuk nomor HP lewat Getcontact. Kirim nomornya, biar admin yang bantu cek.</p>
+            <p class="lead">Cek profil dan nama seharga Rp1.000 per nomor. Mau lihat semua tag yang tersedia juga? Pilih paket lengkap Rp2.000 per nomor.</p>
             <button class="button" id="open-order">Cek nomor sekarang <svg aria-hidden="true"><use href="#arrow"/></svg></button>
-            <p class="micro">1–3 nomor sekali pesan · Fee seikhlasnya</p>
+            <p class="micro">1–3 nomor sekali pesan · Mulai Rp1.000 per nomor</p>
           </div>
           <div class="mock" aria-label="Ilustrasi tampilan tag, bukan hasil pemeriksaan">
             <div class="mock-head">
@@ -901,8 +900,8 @@
             <span>Dalam satu kali pesan</span>
           </div>
           <div>
-            <strong>Fee seikhlasnya</strong>
-            <span>Untuk bantu jasa ini</span>
+            <strong>Mulai Rp1.000 per nomor</strong>
+            <span>Rp2.000 dengan semua tag yang tersedia</span>
           </div>
           <div>
             <strong>Lewat WhatsApp</strong>
@@ -924,10 +923,10 @@
             </article>
             <article class="step">
               <div class="num">
-                02 / DONATE ADMIN
+                02 / PEMBAYARAN
               </div>
-              <h3>Nominalnya kamu tentukan.</h3>
-              <p>Pilih QRIS, GoPay, DANA, ShopeePay, atau LinkAja. Nominal seikhlasnya. Lalu pilih Sudah Donate atau Lewati.</p>
+              <h3>Bayar sesuai paket.</h3>
+              <p>Pilih QRIS, GoPay, DANA, ShopeePay, atau LinkAja. Transfer sesuai total yang tertera, lalu siapkan bukti pembayaran.</p>
             </article>
             <article class="step">
               <div class="num">
@@ -942,7 +941,7 @@
           <h2>Sebelum cek nomor</h2>
           <details>
             <summary>Apa yang akan saya terima?</summary>
-            <p>Admin membantu mengecek tag yang tersedia di Getcontact dan mengirim hasilnya melalui WhatsApp. Tag adalah sebutan kontak dari pengguna lain, bukan identitas yang terverifikasi.</p>
+            <p>Admin mengecek profil dan nama terlebih dahulu. Untuk paket lengkap, jika ada penanda, admin memakai kredit premium untuk membuka semua tag yang tersedia. Hasil dikirim lewat WhatsApp. Tag adalah sebutan kontak dari pengguna lain, bukan identitas yang terverifikasi.</p>
           </details>
           <details>
             <summary>Apakah hasilnya langsung muncul di website?</summary>
@@ -950,7 +949,7 @@
           </details>
           <details>
             <summary>Harus bayar berapa?</summary>
-            <p>Fee seikhlasnya untuk membantu jasa ini, minimal Rp1.000 jika ingin donate. Kamu tetap bisa memilih Lewati tanpa donate. Pembayaran dicek manual oleh admin melalui bukti transfer.</p>
+            <p>Cek profil dan nama Rp1.000 per nomor. Paket lengkap Rp2.000 per nomor sudah termasuk profil, nama, dan semua tag yang tersedia. Pembayaran dicek manual oleh admin melalui bukti transfer.</p>
           </details>
           <details>
             <summary>Kalau nomornya tidak punya tag?</summary>
@@ -1003,15 +1002,16 @@
         </section>
         <section id="donate-step" hidden>
           <div class="step-label">Langkah 02 / 03</div>
-          <h2 class="dialog-title" id="donate-title" tabindex="-1">Donate seikhlasnya.</h2>
-          <p class="intro">Pilih metode donate yang paling nyaman. Mulai Rp1.000 seikhlasnya, atau lewati tahap ini.</p>
+          <h2 class="dialog-title" id="donate-title" tabindex="-1">Bayar pesananmu.</h2>
+          <p class="intro">Transfer sesuai total di bawah, lalu kirim bukti pembayaran ke admin melalui WhatsApp.</p>
+          <p class="pay-desc" id="bill"></p>
           <div class="payment">
             <div class="pay-head">
-              <strong>Donate Admin</strong>
+              <strong>Pembayaran</strong>
             </div>
-            <p class="pay-desc">Kirim nominal seikhlasnya, minimal Rp1.000. Terima kasih!</p>
+            <p class="pay-desc">Pilih metode pembayaran.</p>
             <fieldset class="method-picker">
-              <legend>Metode donate</legend>
+              <legend>Metode pembayaran</legend>
               <div class="method-grid">
               <label class="method-option">
                 <input type="radio" name="donate-method" value="QRIS" checked>
@@ -1038,7 +1038,7 @@
             <div id="qris-panel">
             <div class="qr-card">
               <b>QRIS · BabayShop.id</b>
-              <button type="button" class="qr-thumbnail" id="qr-thumbnail" aria-label="Perbesar QRIS BabayShop"><img class="qris-image" alt="Kode QRIS donate admin BabayShop" width="500" height="500"></button>
+              <button type="button" class="qr-thumbnail" id="qr-thumbnail" aria-label="Perbesar QRIS BabayShop"><img class="qris-image" alt="Kode QRIS pembayaran admin BabayShop" width="500" height="500"></button>
               <small>SCAN DENGAN BANK / E-WALLET</small>
             </div>
             <div class="qr-action">
@@ -1051,21 +1051,11 @@
               <input id="wallet-number" class="wallet-number" type="text" value="088215993544" readonly inputmode="numeric" aria-describedby="wallet-owner">
               <p class="wallet-owner" id="wallet-owner">a.n. Bayu Rizky Sampurna</p>
               <button class="button secondary full" id="copy-wallet" type="button">Salin Nomor</button>
-              <p class="wallet-hint">Buka aplikasi e-wallet pilihanmu, lalu transfer ke nomor di atas dengan nominal seikhlasnya.</p>
+              <p class="wallet-hint">Buka aplikasi e-wallet pilihanmu, lalu transfer ke nomor di atas sesuai total pesanan.</p>
             </div>
-          </div>
-          <div class="donate-amount-field">
-            <label for="donate-amount">Nominal donate kamu</label>
-            <div class="amount-input-wrap">
-              <span aria-hidden="true">Rp</span>
-              <input id="donate-amount" type="text" inputmode="numeric" autocomplete="off" maxlength="18" placeholder="Contoh: 1.000" aria-describedby="amount-hint amount-error">
-            </div>
-            <p class="amount-hint" id="amount-hint">Masukkan nominal yang sudah kamu transfer, minimal Rp1.000. Jika belum donate, pilih Lewati.</p>
-            <p class="error" id="amount-error" role="alert"></p>
           </div>
           <div class="donate-actions">
-            <button class="button secondary" id="skip-donate" type="button">Lewati</button>
-            <button class="button" id="done-donate" type="button">Sudah Donate</button>
+            <button class="button" id="done-donate" type="button">Saya sudah transfer</button>
           </div>
           <div class="back-row">
             <button class="text-button" id="donate-back-entry" type="button">← Ubah nomor</button>
@@ -1077,7 +1067,7 @@
           </div>
           <h2 class="dialog-title" id="review-title" tabindex="-1">Tinjau pesanmu.</h2>
           <p class="intro">Pastikan nomornya sudah benar, lalu klik Langsung Cek Nomor untuk membuka WhatsApp admin.</p>
-          <p class="donate-thanks" id="donate-thanks" hidden>Terima kasih sudah donate! Lampirkan bukti transfer di chat admin ya.</p>
+          <p class="donate-thanks" id="donate-thanks" hidden> Lampirkan bukti transfer di chat admin ya.</p>
           <div class="review-head">
             <label for="message">Pesan untuk admin</label>
             <button class="text-button" id="copy-message">Salin pesan</button>
@@ -1089,7 +1079,7 @@
           <p class="bottom-note">Pesan terisi otomatis. Tinggal tekan Kirim di WhatsApp.<br>Admin · 0815-2398-4574</p>
           <p class="urgent-note" id="urgent-note" hidden>Kalau mendesak dan ingin nomornya segera dicek, boleh telepon admin lewat WhatsApp ya.</p>
           <div class="back-row">
-            <button class="text-button" id="back-donate" type="button">← Kembali ke Donate</button>
+            <button class="text-button" id="back-donate" type="button">← Kembali ke pembayaran</button>
             <button class="text-button" id="back-entry" type="button">Ubah nomor</button>
           </div>
         </section>
@@ -1107,7 +1097,7 @@
           <img class="qris-image" alt="QRIS BabayShop ukuran besar" width="500" height="500">
         </div>
         <a class="button full" id="save-qr" download="QRIS-BabayShop.png" style="margin-bottom:16px">Simpan QRIS ↓</a>
-        <p class="hint" style="margin-bottom:0;text-align:center">Scan dari aplikasi bank atau e-wallet.<br>Nominal seikhlasnya untuk membantu jasa ini.</p>
+        <p class="hint" style="margin-bottom:0;text-align:center">Scan dari aplikasi bank atau e-wallet.<br>Transfer sesuai total pesanan.</p>
       </div>
     </dialog>
     <script>
@@ -1160,6 +1150,10 @@
         if(fields.children.length>=3)return;
         const id='phone-'+(++fieldSequence), row=document.createElement('div');row.className='phone-row';
         row.innerHTML='<label for="'+id+'"></label><div class="field-wrap"><input id="'+id+'" type="tel" inputmode="tel" autocomplete="off" placeholder="08xx xxxx xxxx" maxlength="28" required aria-describedby="'+id+'-error"><button class="remove" type="button">×</button></div><span class="error" id="'+id+'-error" aria-live="polite"></span>';
+        const plan = document.createElement('select');
+        plan.setAttribute('aria-label', 'Paket untuk nomor ' + fieldSequence);
+        plan.innerHTML = '<option value="1000">Profil dan nama · Rp1.000</option><option value="2000">Lengkap dengan semua tag · Rp2.000</option>';
+        row.append(plan);
         const input=row.querySelector('input');
         input.addEventListener('input',()=>{input.removeAttribute('aria-invalid');row.querySelector('.error').textContent='';});
         row.querySelector('.remove').addEventListener('click',()=>{row.remove();syncFields();fields.lastElementChild.querySelector('input').focus();});
@@ -1178,23 +1172,11 @@
         return clean;
       }
       const formatMoney = value => 'Rp' + new Intl.NumberFormat('id-ID').format(value);
-      function parseDonationAmount(raw) {
-        const value = raw.trim().replace(/^Rp\s*/i, '');
-        if (!/^(?:\d+|[1-9]\d{0,2}(?:\.\d{3})+)$/.test(value)) {
-          throw new Error('Isi nominal dalam rupiah, misalnya 1000 atau 1.000.');
-        }
-        const amount = Number(value.replace(/\./g, ''));
-        if (!Number.isSafeInteger(amount) || amount < SITE_SETTINGS.minimumDonate) {
-          throw new Error('Minimal donate ' + formatMoney(SITE_SETTINGS.minimumDonate) + '.');
-        }
-        return amount;
-      }
-      function makeMessage(numbers, donated = false, code = requestCode, amount = 0) {
-        const numberList = numbers.map(number => number.replace(/^\+/, '')).join('\n');
-        const heading = 'Ref: GC' + (donated ? '7' : '3') + '-' + (donated ? amount : '0000') + '-' + code;
-        return heading + '\n\nHalo BabayShop.id, saya ingin minta jasa cek nomor via Getcontact.\nNomor yang ingin dicek:\n\n'
-          + numberList
-          + '\n\nMohon bantu cek tag yang tersedia ya, Kak. Terima kasih!';
+      function summary() {
+        const prices = [...fields.querySelectorAll('select')].map(select => Number(select.value));
+        const lines = checkedNumbers.map((number, i) =>
+          number + ' — ' + (prices[i] === 2000 ? 'Profil, nama & semua tag tersedia' : 'Profil dan nama') + ' · ' + formatMoney(prices[i]));
+        return lines.join('\n') + '\nTotal pembayaran: ' + formatMoney(prices.reduce((sum, price) => sum + price, 0));
       }
       function isServiceOpen() { return SITE_SETTINGS.status === 'buka'; }
       function showClosed() {
@@ -1229,27 +1211,14 @@
         order.scrollTop = 0;
       }
       function showEntry() { showStep(1); }
-      function showReview(donated) {
+      function showReview() {
         if (!isServiceOpen()) { showClosed(); return; }
-        $('amount-error').textContent = '';
-        $('donate-amount').removeAttribute('aria-invalid');
-        let amount = 0;
-        if (donated) {
-          try { amount = parseDonationAmount($('donate-amount').value); }
-          catch (error) {
-            $('amount-error').textContent = error.message;
-            $('donate-amount').setAttribute('aria-invalid', 'true');
-            $('donate-amount').focus();
-            return;
-          }
-        }
-        const message = makeMessage(checkedNumbers, donated, requestCode, amount);
-        $('donate-thanks').textContent = 'Terima kasih sudah donate ' + formatMoney(amount) + '! Lampirkan bukti transfer di chat admin ya.';
+        const message = 'Ref: GC-' + requestCode + '\nHalo BabayShop.id, saya mau cek nomor berikut.\n\n' + summary() + '\nMetode transfer: ' + DONATE_METHODS[selectedDonateMethod].label + '\nMohon verifikasi bukti transfer saya ya, Kak.';
         $('message').value = message;
         $('send-wa').href = 'https://wa.me/' + ADMIN_WHATSAPP + '?text=' + encodeURIComponent(message);
         $('send-wa').removeAttribute('aria-disabled');
-        $('donate-thanks').hidden = !donated;
-        $('urgent-note').hidden = !donated;
+        $('donate-thanks').hidden = false;
+        $('urgent-note').hidden = false;
         showStep(3);
       }
       function openOrder() {
@@ -1264,19 +1233,13 @@
       $('send-wa').addEventListener('click', event => {
         if (!isServiceOpen()) { event.preventDefault(); showClosed(); }
       });
-      $('donate-amount').addEventListener('input', () => {
-        $('amount-error').textContent = '';
-        $('donate-amount').removeAttribute('aria-invalid');
-      });
-      $('amount-hint').textContent = 'Masukkan nominal yang sudah kamu transfer, minimal ' + formatMoney(SITE_SETTINGS.minimumDonate) + '. Jika belum donate, pilih Lewati.';
       $('close-order').addEventListener('click',()=>order.close());
       order.addEventListener('close',()=>{document.body.classList.remove('modal-open');if(lastFocus&&lastFocus!==document.body)lastFocus.focus();else $('open-order').focus();});
       $('add-phone').addEventListener('click',()=>addPhone());
       $('back-entry').addEventListener('click', showEntry);
       $('donate-back-entry').addEventListener('click', showEntry);
       $('back-donate').addEventListener('click', () => showStep(2));
-      $('skip-donate').addEventListener('click', () => showReview(false));
-      $('done-donate').addEventListener('click', () => showReview(true));
+      $('done-donate').addEventListener('click', showReview);
       $('number-form').addEventListener('submit',event=>{
         event.preventDefault();
         if (!isServiceOpen()) { showClosed(); return; }
@@ -1288,6 +1251,8 @@
         });
         if(firstInvalid){firstInvalid.focus();return;}
         checkedNumbers = numbers;
+        $('bill').style.whiteSpace = 'pre-line';
+        $('bill').textContent = summary();
         requestCode = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
         selectDonateMethod('QRIS');
         $('donate-thanks').hidden = true;
@@ -1313,5 +1278,6 @@
       function tick(){const now=new Date();$('clock').textContent=new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(now).replace(/\./g,':')+' WIB';$('year').textContent=new Intl.DateTimeFormat('en',{timeZone:'Asia/Jakarta',year:'numeric'}).format(now);}
       tick();setInterval(tick,1000);addPhone(false);openOrder();
     </script>
-  </body>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"325a7821a5f54e25a776020c55a929c0","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
 </html>
