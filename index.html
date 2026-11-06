@@ -831,7 +831,46 @@
       .amount-hint { color: var(--muted); font-size: 11px; margin-top: 8px; }
       .service-banner { display: grid; gap: 5px; margin-top: 24px; padding: 18px 20px; border: 1px solid #b9d6f5; border-radius: 14px; background: #e8f3ff; color: #285b90; font-size: 13px; }
       .closed-symbol { display: grid; place-items: center; width: 54px; height: 54px; margin-bottom: 22px; border-radius: 50%; background: #e5f1ff; color: #0667c9; font-size: 30px; font-weight: 750; }
-    select {width:100%;padding:10px;margin:5px 0 12px;border:1px solid #ccd8e4;border-radius:8px;background:white;color:#182739;font:inherit}</style>
+    select {width:100%;padding:10px;margin:5px 0 12px;border:1px solid #ccd8e4;border-radius:8px;background:white;color:#182739;font:inherit}
+/* Service selection */
+.plan-picker{border:0;padding:0;margin:18px 0 25px;min-width:0}
+.plan-picker legend{font-size:13px;font-weight:750;margin-bottom:12px;width:100%}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.plan-button{position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;text-align:left;min-width:0;padding:18px 14px 13px;border:1.5px solid #d7e5f5;border-radius:18px;background:linear-gradient(145deg,#fff,#f3f8ff);color:#173958;box-shadow:0 3px 9px #164e8910;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background .22s ease}
+.plan-button:focus-visible{outline:3px solid #77baff;outline-offset:4px}
+.plan-icon{display:grid;place-items:center;width:39px;height:39px;background:#e8f2ff;color:#0872d7;border-radius:12px;margin-bottom:14px;transition:transform .3s,background .3s,color .3s}
+.plan-icon svg{width:22px;height:22px}
+.plan-name{font-size:13px;font-weight:750;line-height:1.4}
+.plan-button strong{font-size:clamp(22px,5.8vw,27px);line-height:1.2;letter-spacing:-1px;margin:8px 0 2px;color:#0966c5}
+.plan-button small{display:block;font-size:11px;color:#5a718a;line-height:1.5}
+.plan-desc{margin-top:12px;min-height:34px}
+.plan-check{position:absolute;top:17px;right:13px;display:grid;place-items:center;width:21px;height:21px;border:1.5px solid #c1d5eb;border-radius:50%;color:transparent;font-size:12px;transition:background .2s,transform .25s,border-color .2s}
+.plan-state{display:block;width:100%;margin-top:15px;padding-top:10px;border-top:1px solid #dce8f4;font-size:11px;font-weight:750;color:#607c99;letter-spacing:.2px}
+.plan-state::after{content:'Pilih layanan →'}
+.plan-button[aria-pressed=true]{border-color:#0874da;background:linear-gradient(145deg,#eef7ff,#ddecff);box-shadow:0 6px 20px #0874da24,inset 0 0 0 .5px #0874da;transform:translateY(-2px)}
+.plan-button[aria-pressed=true] .plan-icon{background:#0874da;color:white;transform:rotate(-6deg)}
+.plan-button[aria-pressed=true] .plan-check{background:#0874da;border-color:#0874da;color:white;animation:check-pop .32s ease-out}
+.plan-button[aria-pressed=true] .plan-state{color:#0966c5;border-color:#bed8f5}
+.plan-button[aria-pressed=true] .plan-state::after{content:'✓ Terpilih'}
+.plan-button:active{transform:scale(.97)}
+.plan-picker[data-invalid=true] .plan-button{border-color:#c52c3c}
+.plan-ripple{position:absolute;width:230px;height:230px;border-radius:50%;background:#1687ee20;pointer-events:none;z-index:-1;animation:plan-ripple .6s ease-out forwards}
+@keyframes check-pop{0%{transform:scale(.45)}65%{transform:scale(1.2)}100%{transform:scale(1)}}
+@keyframes plan-ripple{from{transform:translate(-50%,-50%) scale(0);opacity:1}to{transform:translate(-50%,-50%) scale(2.5);opacity:0}}
+@media(hover:hover){.plan-button:hover{transform:translateY(-4px);border-color:#72ade9;box-shadow:0 10px 23px #0b65c320}.plan-button:hover .plan-icon{transform:translateY(-2px) rotate(-6deg)}}
+@media(prefers-reduced-motion:reduce){.plan-button,.plan-icon,.plan-check{transition:none!important;animation:none!important}.plan-ripple{display:none}.plan-button:hover,.plan-button[aria-pressed=true]{transform:none}}
+
+/* Compact service cards */
+.plan-grid{gap:10px}
+.plan-button{padding:13px 12px 10px;border-radius:15px}
+.plan-icon{width:30px;height:30px;border-radius:9px;margin-bottom:9px}
+.plan-icon svg{width:18px;height:18px}
+.plan-name{font-size:12px;min-height:34px}
+.plan-button strong{font-size:23px;margin-top:5px}
+.plan-desc{margin-top:8px;min-height:33px}
+.plan-state{margin-top:9px;padding-top:7px}
+.plan-check{top:13px;right:12px;width:18px;height:18px;font-size:10px}
+</style>
   </head>
   <body>
     <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs><symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol><symbol id="phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4M10 5h4"/></symbol><symbol id="chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8m-8 4h5"/></symbol></defs></svg>
@@ -1150,9 +1189,24 @@
         if(fields.children.length>=3)return;
         const id='phone-'+(++fieldSequence), row=document.createElement('div');row.className='phone-row';
         row.innerHTML='<label for="'+id+'"></label><div class="field-wrap"><input id="'+id+'" type="tel" inputmode="tel" autocomplete="off" placeholder="08xx xxxx xxxx" maxlength="28" required aria-describedby="'+id+'-error"><button class="remove" type="button">×</button></div><span class="error" id="'+id+'-error" aria-live="polite"></span>';
-        const plan = document.createElement('select');
-        plan.setAttribute('aria-label', 'Paket untuk nomor ' + fieldSequence);
-        plan.innerHTML = '<option value="1000">Profil dan nama · Rp1.000</option><option value="2000">Lengkap dengan semua tag · Rp2.000</option>';
+        const plan = document.createElement('fieldset');
+        plan.className = 'plan-picker';
+        plan.setAttribute('aria-describedby', id + '-plan-error');
+        plan.innerHTML = '<legend>Pilih layanan <span style="color:#b42335">· Wajib</span></legend><div class="plan-grid"><button type="button" class="plan-button" data-price="1000" aria-pressed="false"><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></span><span class="plan-name">Cek Profil (tanpa tag)</span><span class="plan-check" aria-hidden="true">✓</span><strong>Rp1.000</strong><small>per nomor</small><small class="plan-desc">Profil dan nama</small><span class="plan-state" aria-hidden="true"></span></button><button type="button" class="plan-button" data-price="2000" aria-pressed="false"><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 13 11 22 2 13V3h10l8 8a1.5 1.5 0 0 1 0 2Z"/><circle cx="7" cy="8" r="1"/><path d="m12 1 10 10"/></svg></span><span class="plan-name">Cek Lengkap</span><span class="plan-check" aria-hidden="true">✓</span><strong>Rp2.000</strong><small>per nomor</small><small class="plan-desc">Profil, nama + semua tag tersedia</small><span class="plan-state" aria-hidden="true"></span></button></div><span class="error plan-error" id="'+id+'-plan-error" aria-live="polite"></span>';
+        plan.querySelectorAll('button').forEach(button => button.addEventListener('click', event => {
+          const rect = button.getBoundingClientRect();
+          const ripple = document.createElement('span');
+          ripple.className = 'plan-ripple';
+          ripple.setAttribute('aria-hidden', 'true');
+          ripple.style.left = (event.detail ? event.clientX - rect.left : rect.width / 2) + 'px';
+          ripple.style.top = (event.detail ? event.clientY - rect.top : rect.height / 2) + 'px';
+          button.append(ripple);
+          setTimeout(() => ripple.remove(), 650);
+          plan.dataset.price = button.dataset.price;
+          plan.removeAttribute('data-invalid');
+          plan.querySelector('.plan-error').textContent = '';
+          plan.querySelectorAll('button').forEach(option => option.setAttribute('aria-pressed', String(option === button)));
+        }));
         row.append(plan);
         const input=row.querySelector('input');
         input.addEventListener('input',()=>{input.removeAttribute('aria-invalid');row.querySelector('.error').textContent='';});
@@ -1173,7 +1227,7 @@
       }
       const formatMoney = value => 'Rp' + new Intl.NumberFormat('id-ID').format(value);
       function summary() {
-        const prices = [...fields.querySelectorAll('select')].map(select => Number(select.value));
+        const prices = [...fields.querySelectorAll('.plan-picker')].map(plan => Number(plan.dataset.price));
         const lines = checkedNumbers.map((number, i) =>
           number + ' — ' + (prices[i] === 2000 ? 'Profil, nama & semua tag tersedia' : 'Profil dan nama') + ' · ' + formatMoney(prices[i]));
         return lines.join('\n') + '\nTotal pembayaran: ' + formatMoney(prices.reduce((sum, price) => sum + price, 0));
@@ -1249,6 +1303,13 @@
           try{const number=normalizePhone(input.value);if(seen.has(number))throw new Error('Nomor ini sudah diisi. Gunakan nomor lain atau hapus kolom ini.');seen.add(number);numbers.push(number);}
           catch(e){error.textContent=e.message;input.setAttribute('aria-invalid','true');firstInvalid=firstInvalid||input;}
         });
+        fields.querySelectorAll('.plan-picker').forEach(plan => {
+          if (!['1000', '2000'].includes(plan.dataset.price)) {
+            plan.dataset.invalid = 'true';
+            plan.querySelector('.plan-error').textContent = 'Pilih salah satu layanan untuk nomor ini.';
+            firstInvalid = firstInvalid || plan.querySelector('button');
+          }
+        });
         if(firstInvalid){firstInvalid.focus();return;}
         checkedNumbers = numbers;
         $('bill').style.whiteSpace = 'pre-line';
@@ -1279,5 +1340,6 @@
       tick();setInterval(tick,1000);addPhone(false);openOrder();
     </script>
   <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"325a7821a5f54e25a776020c55a929c0","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"325a7821a5f54e25a776020c55a929c0","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
